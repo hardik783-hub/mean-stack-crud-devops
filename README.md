@@ -19,7 +19,7 @@ This project demonstrates a fully containerized MEAN stack application deployed 
 
 - Achieve reliable zero-touch production updates
 
---
+---
 
 ## 🎯 Deployment Objectives
 
@@ -126,19 +126,24 @@ location /api/ {
 
 ## 📸 Implementation Evidence
 
-###🔹 CI/CD Configuration
+🔹 CI/CD Configuration
+
 <img width="800" src="https://github.com/user-attachments/assets/930582f6-e316-411c-ac94-b0d3331ac21d" />
 
-###🔹 Successful Pipeline Execution
+🔹 Successful Pipeline Execution
+
 <img width="800" src="https://github.com/user-attachments/assets/b021e095-3f93-4d98-98b6-08da53c55065" />
 
-###🔹 Docker Image Publishing
+🔹 Docker Image Publishing
+
 <img width="900" src="https://github.com/user-attachments/assets/075f67b4-8e15-4f6a-96b5-661ee8291b82" />
 
-###🔹 EC2 Deployment Verification
+🔹 EC2 Deployment Verification
+
 <img width="900" src="https://github.com/user-attachments/assets/6eb12452-830e-4cd8-8c0e-3576dbd53941" />
 
-###🔹 Production Application
+🔹 Production Application
+
 <img width="900" src="https://github.com/user-attachments/assets/3c8606aa-6e5c-46b7-9efa-e497d3f7d417" />
 
 ---
