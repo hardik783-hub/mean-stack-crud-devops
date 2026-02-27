@@ -1,202 +1,247 @@
-🚀 MEAN Stack CRUD Application with Docker, CI/CD & AWS Deployment
-📌 Project Overview
+# 🚀 Production-Ready MEAN Stack Deployment
+## DevOps CI/CD & Cloud Deployment Case Study
 
-This project demonstrates a fully containerized MEAN Stack application deployed on AWS EC2 with automated CI/CD using GitHub Actions.
+---
 
-It showcases:
+## 📌 Project Overview
 
-Dockerized Angular frontend (served via Nginx)
+This project demonstrates a fully containerized MEAN stack application deployed on AWS EC2 with automated CI/CD using GitHub Actions.
 
-Dockerized Node.js + Express backend
+### The objective was to:
 
-MongoDB containerized database
+- Containerize frontend and backend services
 
-Reverse proxy configuration using Nginx
+- Enable service-to-service communication via Docker networking
 
-Automated CI/CD pipeline
+- Implement reverse proxy routing
 
-Production deployment to AWS EC2
+- Automate build, push, and deployment
 
-🏗 Architecture Diagram
+- Achieve reliable zero-touch production updates
 
-<img width="1024" height="1536" alt="architecture diagram" src="https://github.com/user-attachments/assets/161958c7-6f1c-487f-a5af-a150a913dab0" />
+--
 
-🛠 Tech Stack
-Layer	Technology
-Frontend	Angular
-Backend	Node.js + Express
-Database	MongoDB
-Web Server	Nginx
-Containerization	Docker
-Orchestration	Docker Compose
-CI/CD	GitHub Actions
-Cloud	AWS EC2
-📂 Project Structure
-backend/         → Express API
-frontend/        → Angular App + Nginx
-docker-compose.yml
-.github/workflows/deploy.yml
-🔧 Local Setup Instructions
-1️⃣ Clone Repository
-git clone https://github.com/YOUR_USERNAME/mean-stack-crud.git
-cd mean-stack-crud
-2️⃣ Run Using Docker
-docker compose up --build
+## 🎯 Deployment Objectives
 
-Application will be available at:
+- Fully Dockerized architecture
 
-http://localhost:3000
+- CI/CD triggered on push to main
 
-Backend:
+- Automatic image build and push to Docker Hub
 
-http://localhost:5000
+- Secure SSH-based deployment to EC2
 
-MongoDB:
+- Reverse proxy using Nginx
 
-mongodb://localhost:27017
-☁️ AWS EC2 Deployment Guide
-1️⃣ Launch EC2 Instance
+- Persistent MongoDB storage
 
-Ubuntu 24.04
+- Production stability without manual intervention
+  
+---
 
-Allow inbound ports:
+## 🏗 Final Architecture
 
-22 (SSH)
+### Flow
+<img width="640" src="https://github.com/user-attachments/assets/161958c7-6f1c-487f-a5af-a150a913dab0" />
 
-80 (HTTP)
+---
 
-2️⃣ Install Docker (Stable Method)
+## ⚙️ System Components
+
+### 1️⃣ Frontend (Angular + Nginx)
+
+- Multi-stage Docker build
+
+- Static files served via Nginx
+
+- SPA routing enabled via try_files
+
+- Reverse proxy for /api requests
+
+- Reverse Proxy Configuration
+
+```
+location /api/ {
+    proxy_pass http://backend:8080/;
+}
+```
+
+### Purpose:
+
+- Internal container communication
+
+- No CORS issues
+
+- Clean production routing
+
+---
+
+## 2️⃣ Backend (Node.js + Express)
+
+- REST API with CRUD operations
+
+- MongoDB connection via service name
+
+- Environment variable-based configuration
+
+- Container memory isolation
+
+---
+
+## 3️⃣ Database (MongoDB)
+
+-- Runs as isolated container
+
+-- Persistent volume mounted
+
+-- Automatically connected via Docker network
+
+-- Data survives container restart
+
+---
+
+## 🔁 CI/CD Pipeline
+
+- Implemented using GitHub Actions.
+
+- Workflow Stages
+
+- Build backend Docker image
+
+- Build frontend Docker image
+
+- Push images to Docker Hub
+
+- SSH into EC2
+
+- Pull updated images
+
+- Restart containers
+
+- Trigger
+
+- Push to main branch.
+
+---
+
+## 📸 Implementation Evidence
+
+###🔹 CI/CD Configuration
+<img width="800" src="https://github.com/user-attachments/assets/930582f6-e316-411c-ac94-b0d3331ac21d" />
+
+###🔹 Successful Pipeline Execution
+<img width="800" src="https://github.com/user-attachments/assets/b021e095-3f93-4d98-98b6-08da53c55065" />
+
+###🔹 Docker Image Publishing
+<img width="900" src="https://github.com/user-attachments/assets/075f67b4-8e15-4f6a-96b5-661ee8291b82" />
+
+###🔹 EC2 Deployment Verification
+<img width="900" src="https://github.com/user-attachments/assets/6eb12452-830e-4cd8-8c0e-3576dbd53941" />
+
+###🔹 Production Application
+<img width="900" src="https://github.com/user-attachments/assets/3c8606aa-6e5c-46b7-9efa-e497d3f7d417" />
+
+---
+
+## 🛠 Deployment Procedure
+
+### Local Run
+``` docker compose up --build ```
+
+### EC2 Setup
+```
 sudo apt update
 sudo apt install docker.io -y
 sudo systemctl enable docker
 sudo systemctl start docker
 sudo usermod -aG docker ubuntu
-newgrp docker
-
-Verify:
-
-docker ps
-3️⃣ Deploy Application
-git clone https://github.com/YOUR_USERNAME/mean-stack-crud.git
-cd mean-stack-crud
+```
+#### Deploy:
+```
 docker-compose up -d
+```
+---
 
-Application accessible at:
+## 🧠 Debugging & Challenges Resolved
 
-http://<EC2-PUBLIC-IP>
-🔁 CI/CD Pipeline Overview
+### During implementation, the following issues were identified and fixed:
 
-The GitHub Actions workflow performs:
+- Docker daemon startup failure on Ubuntu 24.04
 
-Build backend Docker image
+- Port conflicts with Jenkins
 
-Build frontend Docker image
+- MongoDB connection failures inside container
 
-Push images to Docker Hub
+- Nginx misconfiguration causing restart loop
 
-SSH into EC2
+- Reverse proxy misrouting /api
 
-Pull latest images
+### Final system is stable and redeployable.
 
-Restart containers
+---
 
-Trigger:
+## 📊 System Stability
 
-Push to main branch
+### Feature	Status
 
-Workflow file:
+- Automated Build	     ✅
+- Image Versioning	     ✅
+- Secure SSH Deployment	 ✅
+- Reverse Proxy Routing	 ✅
+- Persistent Storage	 ✅
+- Zero Manual Deployment ✅
+  
+---
 
-.github/workflows/deploy.yml
+## 🌍 Live Application
 
-
-🔹 1️⃣ CI/CD Configuration
-
-GitHub Actions workflow YAML open
-<img width="923" height="848" alt="image" src="https://github.com/user-attachments/assets/930582f6-e316-411c-ac94-b0d3331ac21d" />
-
-
-Secrets configuration page
-<img width="573" height="329" alt="image" src="https://github.com/user-attachments/assets/3c6cec8c-77d6-4459-b9b5-c7adf0b3edfa" />
-
-
-🔹 2️⃣ Successful CI/CD Execution
-
-<img width="900" height="729" alt="image" src="https://github.com/user-attachments/assets/b021e095-3f93-4d98-98b6-08da53c55065" />
-
-
-🔹 3️⃣ Docker Image Build & Push
-
-
-Docker Hub repository
-<img width="1859" height="858" alt="image" src="https://github.com/user-attachments/assets/075f67b4-8e15-4f6a-96b5-661ee8291b82" />
-
-
-
-🔹 4️⃣ EC2 Deployment
-
-<img width="1462" height="117" alt="image" src="https://github.com/user-attachments/assets/6eb12452-830e-4cd8-8c0e-3576dbd53941" />
-
-
-🔹 5️⃣ Application Working UI
-
-<img width="952" height="841" alt="image" src="https://github.com/user-attachments/assets/3c8606aa-6e5c-46b7-9efa-e497d3f7d417" />
-
-
-🔹 6️⃣ Nginx Reverse Proxy Configuration
-
-<img width="1541" height="495" alt="image" src="https://github.com/user-attachments/assets/f64f0df7-356c-46cd-8cde-77fa98369d3f" />
-
-
-🔐 Nginx Reverse Proxy Configuration
-
-Example:
-
-location /api/ {
-    proxy_pass http://backend:8080/;
-}
-
-This allows frontend to communicate with backend within Docker network.
-
-📦 Docker Images
-
-Available on Docker Hub:
-
-docker pull hardikgarg000/mean-crud-backend
-docker pull hardikgarg000/mean-crud-frontend
-
-🎯 DevOps Highlights
-
-Infrastructure as Code using Docker Compose
-
-Automated CI/CD pipeline
-
-Container networking
-
-Reverse proxy configuration
-
-Secure SSH deployment
-
-Cloud infrastructure setup
-
-🌍 Live Application
+```
 http://98.92.202.93/
-🏆 Key Learning Outcomes
 
-Docker image creation and optimization
+```
 
-CI/CD automation with GitHub Actions
+---
 
-Cloud deployment on AWS EC2
+## 📈 Future Improvements
 
-Nginx reverse proxy configuration
+- Add HTTPS using Let's Encrypt
 
-Debugging real-world infrastructure issues
+- Implement blue-green deployment strategy
 
-🚀 Production Features Implemented
+- Add centralized logging (ELK stack)
 
-✔ Containerized services
-✔ Persistent MongoDB storage
-✔ CI/CD automation
-✔ Cloud deployment
-✔ Reverse proxy routing
+- Add Prometheus monitoring
 
+- Introduce staging environment
+
+- Add Docker image version tagging
+  
+---
+
+## Outcome
+
+### Deployment:
+
+- Fully automated
+
+- Repeatable
+
+- Production-ready
+
+### Infrastructure:
+
+- Containerized services
+
+- Reverse proxy routing
+
+- Cloud hosted
+
+### DevOps Capability Demonstrated:
+
+- CI/CD automation
+
+- Cloud debugging
+
+- Docker networking
+
+- roduction troubleshooting
